@@ -57,17 +57,42 @@ header.nav{
 }
 .nav-mark{
   font-family:var(--font-mono); font-size:14px; color:var(--pipe);
-  letter-spacing:0.02em;
+  letter-spacing:0.02em; display:flex; align-items:center; gap:11px;
 }
-.nav-links{ display:flex; gap:28px; list-style:none; font-size:14px; color:var(--text-dim); }
-.nav-links a{ text-decoration:none; transition:color .15s ease; }
+.chip{
+  width:15px; height:15px; position:relative; display:inline-block;
+  transform-style:preserve-3d; transform:rotateX(-24deg) rotateY(35deg);
+  animation:chip-spin 10s linear infinite;
+}
+@keyframes chip-spin{
+  from{ transform:rotateX(-24deg) rotateY(35deg); }
+  to{ transform:rotateX(-24deg) rotateY(395deg); }
+}
+@media (prefers-reduced-motion: reduce){ .chip{ animation:none; } }
+.chip-face{ position:absolute; width:15px; height:15px; }
+.chip-face.top{ background:var(--pipe); transform:rotateX(90deg) translateZ(7.5px); }
+.chip-face.front{ background:var(--accent); transform:translateZ(7.5px); }
+.chip-face.side{ background:var(--accent-soft); transform:rotateY(90deg) translateZ(7.5px); }
+.nav-links{ display:flex; gap:28px; list-style:none; font-size:14px; color:var(--text-dim); position:relative; }
+.nav-links li{ position:relative; z-index:1; }
+.nav-links a{ text-decoration:none; transition:color .15s ease; display:block; padding:6px 3px; }
 .nav-links a:hover{ color:var(--text); }
+.nav-highlight{
+  position:absolute; top:50%; height:28px; transform:translateY(-50%);
+  border-radius:5px; background:linear-gradient(180deg, rgba(95,212,192,0.16), rgba(95,212,192,0.03));
+  border:1px solid rgba(95,212,192,0.4);
+  box-shadow:0 0 12px rgba(95,212,192,0.3), inset 0 0 6px rgba(95,212,192,0.2);
+  opacity:0; transition:opacity .2s ease, left .25s cubic-bezier(.2,.8,.2,1), width .25s cubic-bezier(.2,.8,.2,1);
+  pointer-events:none; z-index:0;
+}
+.nav-links.active .nav-highlight{ opacity:1; }
 .nav-cta{
   font-family:var(--font-mono); font-size:13px; color:var(--accent);
   border:1px solid var(--accent-soft); padding:7px 14px; border-radius:3px;
-  text-decoration:none; transition:background .15s ease, color .15s ease;
+  text-decoration:none; transition:background .15s ease, color .15s ease, box-shadow .15s ease;
+  transform-style:preserve-3d; will-change:transform;
 }
-.nav-cta:hover{ background:var(--accent); color:#171307; }
+.nav-cta:hover{ background:var(--accent); color:#171307; box-shadow:0 6px 18px rgba(232,163,61,0.35); }
 @media (max-width:720px){ .nav-links{ display:none; } }
 
 /* ---------- HERO ---------- */
